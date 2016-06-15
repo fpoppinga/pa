@@ -1,0 +1,357 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>chirp_based</title><meta name="generator" content="MATLAB 9.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-06-10"><meta name="DC.source" content="chirp_based.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Preparations</a></li><li><a href="#2">Construct a package</a></li><li><a href="#3">Receiver</a></li><li><a href="#4">Synchronization</a></li><li><a href="#5">Slice buffers at peaks of correlation</a></li><li><a href="#6">detect symbols in sliced buffers.</a></li><li><a href="#7">Compare results</a></li></ul></div><h2>Preparations<a name="1"></a></h2><p>clean up</p><pre class="codeinput">clear <span class="string">all</span>;
+close <span class="string">all</span>;
+
+<span class="comment">% set up constants</span>
+fs = 44100; <span class="comment">%Hz</span>
+f1 = 1000; <span class="comment">%Hz</span>
+f2 = 3000; <span class="comment">%Hz</span>
+T = 0.005; <span class="comment">%s</span>
+
+<span class="comment">% set up symbols</span>
+x1 = chirp(f1, f2, fs, T);
+[x2, t] = chirp(f2, f1, fs, T);
+size_symbol = size(x1, 2);
+
+<span class="comment">% set up preamble, this is an up chirp with five times the</span>
+<span class="comment">% duration of the symbol.</span>
+preamble = chirp(f1, f2, fs, 5 * T);
+
+<span class="comment">% prepare guard interval</span>
+T_guard = 0.002;
+guard = zeros(1, ceil(T_guard * fs));
+size_guard = size(guard, 2);
+
+<span class="comment">% plot symbols</span>
+figure();
+set(gcf,<span class="string">'numbertitle'</span>,<span class="string">'off'</span>,<span class="string">'name'</span>,<span class="string">'Chirp Symbols in Time Domain'</span>);
+subplot(2, 1, 1); plot(t, x1);
+xlabel(<span class="string">'t in s'</span>), ylabel(<span class="string">'x1(t)'</span>);
+subplot(2, 1, 2); plot(t, x2);
+xlabel(<span class="string">'t in s'</span>), ylabel(<span class="string">'x2(t)'</span>);
+</pre><img vspace="5" hspace="5" src="chirp_based_01.png" style="width:560px;height:420px;" alt=""> <h2>Construct a package<a name="2"></a></h2><p>A package has a constant number of bits. Each bit is mapped onto a symbol and guarded with a guard interval. At the beginning of each package, the preamble is included once.</p><pre class="codeinput">bitsPerPackage = 16;
+bits = [1 1 0 1 0 1 0 0 0 0 0 0 1 1 0 0];
+
+signal = [preamble];
+<span class="keyword">for</span> b = bits
+    <span class="keyword">if</span> b == 1
+    	signal = [signal guard x1];
+    <span class="keyword">else</span>
+        signal = [signal guard x2];
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+figure();
+set(gcf,<span class="string">'numbertitle'</span>,<span class="string">'off'</span>,<span class="string">'name'</span>,<span class="string">'Time Domain Representation of a Package'</span>);
+plot(signal);
+xlabel(<span class="string">'frame index k'</span>), ylabel(<span class="string">'signal(k)'</span>);
+
+<span class="comment">% transmit multiple packages</span>
+tx = [signal guard signal guard signal guard signal];
+<span class="comment">% with noise</span>
+tx = awgn(tx, -2);
+</pre><img vspace="5" hspace="5" src="chirp_based_02.png" style="width:560px;height:420px;" alt=""> <h2>Receiver<a name="3"></a></h2><pre class="codeinput"><span class="comment">% listen for an time interval, long enough to record two full preambles.</span>
+size_signal = size([signal guard], 2);
+record_duration = 2 * size_signal;
+<span class="comment">% recording will start with a random offset</span>
+offset = ceil(rand() * size_signal);
+
+<span class="comment">% two buffers will be needed, to identify subsequent packages</span>
+buffer1 = tx(1, offset:(offset + record_duration));
+<span class="comment">% the second buffer is set one signal size after the first. In live</span>
+<span class="comment">% transmission both buffers will be exchanged after recording one</span>
+<span class="comment">% record_duration.</span>
+buffer2 = tx(1, (offset + size_signal):(offset + size_signal + record_duration));
+
+figure();
+set(gcf,<span class="string">'numbertitle'</span>,<span class="string">'off'</span>,<span class="string">'name'</span>,<span class="string">'Recorded Buffers at Receiver'</span>);
+subplot(2, 1, 1); plot(buffer1);
+xlabel(<span class="string">'frame index k'</span>), ylabel(<span class="string">'buffer1(k)'</span>);
+subplot(2, 1, 2); plot(buffer2);
+xlabel(<span class="string">'frame index k'</span>), ylabel(<span class="string">'buffer2(k)'</span>);
+</pre><img vspace="5" hspace="5" src="chirp_based_03.png" style="width:560px;height:420px;" alt=""> <h2>Synchronization<a name="4"></a></h2><p>find packages by correlation with the preamble.</p><pre class="codeinput">corr_preamble1 = correlate(buffer1, preamble);
+corr_preamble2 = correlate(buffer2, preamble);
+
+thresh = 0.8;
+peaks1 = findAbsolutePeaks(corr_preamble1, 0.8);
+peaks2 = findAbsolutePeaks(corr_preamble2, 0.8);
+
+figure();
+set(gcf,<span class="string">'numbertitle'</span>,<span class="string">'off'</span>,<span class="string">'name'</span>,<span class="string">'Correlation of Preamble with Buffers'</span>);
+subplot(2, 1, 1);
+hold <span class="string">on</span>;
+plot(corr_preamble1);
+plot(peaks1, corr_preamble1(peaks1), <span class="string">'xr'</span>);
+xlabel(<span class="string">'frame index k'</span>), ylabel(<span class="string">'corr_preamble1(k)'</span>);
+hold <span class="string">off</span>;
+subplot(2, 1, 2);
+hold <span class="string">on</span>;
+plot(corr_preamble2);
+plot(peaks2, corr_preamble2(peaks2), <span class="string">'xr'</span>);
+xlabel(<span class="string">'frame index k'</span>), ylabel(<span class="string">'corr_preamble2(k)'</span>);
+hold <span class="string">off</span>;
+</pre><img vspace="5" hspace="5" src="chirp_based_04.png" style="width:560px;height:420px;" alt=""> <h2>Slice buffers at peaks of correlation<a name="5"></a></h2><p>It is assumed, that there will exist only two significant peaks. The buffer needs to be dropped, when more peaks have been detected. This will be the case, when the SNR is poor, i.e. either the noise level is too high or no actual transmission took place.</p><pre class="codeinput"><span class="comment">% plot sliced signal</span>
+buffer1 = buffer1(1, (peaks1(1) + size(preamble, 2)):peaks1(2));
+buffer2 = buffer2(1, (peaks2(1) + size(preamble, 2)):peaks2(2));
+figure();
+subplot(2, 1, 1); plot(buffer1);
+xlabel(<span class="string">'frame index k'</span>), ylabel(<span class="string">'sliced buffer1(k)'</span>);
+subplot(2, 1, 2); plot(buffer2);
+xlabel(<span class="string">'frame index k'</span>), ylabel(<span class="string">'sliced buffer2(k)'</span>);
+</pre><img vspace="5" hspace="5" src="chirp_based_05.png" style="width:560px;height:420px;" alt=""> <h2>detect symbols in sliced buffers.<a name="6"></a></h2><pre class="codeinput">i = 1;
+step = size_symbol + size_guard;
+bits_rx = [];
+
+<span class="keyword">while</span> i &lt; (size(buffer1, 2) - step)
+    window = buffer1(i:(i + step));
+
+    corr_x1 = correlate(window, x1);
+    corr_x2 = correlate(window, x2);
+
+    <span class="keyword">if</span> max(abs(corr_x1)) &gt; max(abs(corr_x2))
+       bits_rx = [bits_rx 1];
+    <span class="keyword">else</span>
+       bits_rx = [bits_rx 0];
+    <span class="keyword">end</span>
+
+    i = i + step;
+<span class="keyword">end</span>
+</pre><h2>Compare results<a name="7"></a></h2><pre class="codeinput">bits_rx
+bits
+</pre><pre class="codeoutput">
+bits_rx =
+
+  Columns 1 through 13
+
+     1     1     0     1     0     1     0     0     0     0     0     0     1
+
+  Columns 14 through 16
+
+     1     0     0
+
+
+bits =
+
+  Columns 1 through 13
+
+     1     1     0     1     0     1     0     0     0     0     0     0     1
+
+  Columns 14 through 16
+
+     1     0     0
+
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Preparations
+% clean up
+clear all;
+close all;
+
+% set up constants
+fs = 44100; %Hz
+f1 = 1000; %Hz
+f2 = 3000; %Hz
+T = 0.005; %s
+
+% set up symbols
+x1 = chirp(f1, f2, fs, T);
+[x2, t] = chirp(f2, f1, fs, T);
+size_symbol = size(x1, 2);
+
+% set up preamble, this is an up chirp with five times the 
+% duration of the symbol.
+preamble = chirp(f1, f2, fs, 5 * T);
+
+% prepare guard interval
+T_guard = 0.002;
+guard = zeros(1, ceil(T_guard * fs)); 
+size_guard = size(guard, 2);
+
+% plot symbols
+figure(); 
+set(gcf,'numbertitle','off','name','Chirp Symbols in Time Domain');
+subplot(2, 1, 1); plot(t, x1);
+xlabel('t in s'), ylabel('x1(t)');
+subplot(2, 1, 2); plot(t, x2);
+xlabel('t in s'), ylabel('x2(t)');
+
+%% Construct a package
+% A package has a constant number of bits. Each bit is mapped onto a symbol
+% and guarded with a guard interval. At the beginning of each package, the
+% preamble is included once.
+
+bitsPerPackage = 16;
+bits = [1 1 0 1 0 1 0 0 0 0 0 0 1 1 0 0];
+
+signal = [preamble];
+for b = bits 
+    if b == 1 
+    	signal = [signal guard x1];
+    else
+        signal = [signal guard x2];
+    end
+end
+
+figure();
+set(gcf,'numbertitle','off','name','Time Domain Representation of a Package');
+plot(signal);
+xlabel('frame index k'), ylabel('signal(k)');
+
+% transmit multiple packages
+tx = [signal guard signal guard signal guard signal];
+% with noise
+tx = awgn(tx, -2);
+
+%% Receiver
+
+% listen for an time interval, long enough to record two full preambles.
+size_signal = size([signal guard], 2);
+record_duration = 2 * size_signal;
+% recording will start with a random offset
+offset = ceil(rand() * size_signal);
+
+% two buffers will be needed, to identify subsequent packages
+buffer1 = tx(1, offset:(offset + record_duration));
+% the second buffer is set one signal size after the first. In live
+% transmission both buffers will be exchanged after recording one
+% record_duration. 
+buffer2 = tx(1, (offset + size_signal):(offset + size_signal + record_duration)); 
+
+figure();
+set(gcf,'numbertitle','off','name','Recorded Buffers at Receiver');
+subplot(2, 1, 1); plot(buffer1);
+xlabel('frame index k'), ylabel('buffer1(k)');
+subplot(2, 1, 2); plot(buffer2);
+xlabel('frame index k'), ylabel('buffer2(k)');
+
+%% Synchronization
+% find packages by correlation with the preamble.
+corr_preamble1 = correlate(buffer1, preamble);
+corr_preamble2 = correlate(buffer2, preamble);
+
+thresh = 0.8;
+peaks1 = findAbsolutePeaks(corr_preamble1, 0.8);
+peaks2 = findAbsolutePeaks(corr_preamble2, 0.8);
+
+figure();
+set(gcf,'numbertitle','off','name','Correlation of Preamble with Buffers');
+subplot(2, 1, 1); 
+hold on;
+plot(corr_preamble1);
+plot(peaks1, corr_preamble1(peaks1), 'xr');
+xlabel('frame index k'), ylabel('corr_preamble1(k)');
+hold off;
+subplot(2, 1, 2);
+hold on;
+plot(corr_preamble2);
+plot(peaks2, corr_preamble2(peaks2), 'xr');
+xlabel('frame index k'), ylabel('corr_preamble2(k)');
+hold off;
+
+%% Slice buffers at peaks of correlation
+% It is assumed, that there will exist only two significant peaks. The
+% buffer needs to be dropped, when more peaks have been detected. This will
+% be the case, when the SNR is poor, i.e. either the noise level is too
+% high or no actual transmission took place. 
+
+% plot sliced signal
+buffer1 = buffer1(1, (peaks1(1) + size(preamble, 2)):peaks1(2));
+buffer2 = buffer2(1, (peaks2(1) + size(preamble, 2)):peaks2(2));
+figure();
+subplot(2, 1, 1); plot(buffer1);
+xlabel('frame index k'), ylabel('sliced buffer1(k)');
+subplot(2, 1, 2); plot(buffer2);
+xlabel('frame index k'), ylabel('sliced buffer2(k)');
+
+%% detect symbols in sliced buffers.
+i = 1;
+step = size_symbol + size_guard;
+bits_rx = [];
+
+while i < (size(buffer1, 2) - step) 
+    window = buffer1(i:(i + step));
+    
+    corr_x1 = correlate(window, x1);
+    corr_x2 = correlate(window, x2);
+        
+    if max(abs(corr_x1)) > max(abs(corr_x2))
+       bits_rx = [bits_rx 1]; 
+    else
+       bits_rx = [bits_rx 0]; 
+    end
+    
+    i = i + step;
+end
+
+%% Compare results
+bits_rx
+bits
+##### SOURCE END #####
+--></body></html>

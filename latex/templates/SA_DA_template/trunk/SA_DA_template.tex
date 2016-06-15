@@ -1,0 +1,393 @@
+\NeedsTeXFormat{LaTeX2e}
+
+% Rahmenumgebung für Studien Diplomarbeiten
+% Erstellt von Oomke Weikert und Florian Keiler
+% Änderungen im file _changelog.txt
+
+% Titel und Autor der Arbeit unten im 
+% \hypersetup Kommando ändern
+% ...und natürlich auf der Titelseite (title.tex bzw. title_en.tex)
+
+% um pdf-file zu erzeugen:
+% compilieren mit:
+% pdflatex 
+% bibtex
+% pdflatex  
+% pdflatex 
+% (Hinweis: Das pdf-file darf bei Aufruf von pdflatex
+% nicht im Adobe Reader geöffnet sein. Wenn man das
+% pdf-file mit Ghostview öffnet, muss es nicht geschlossen
+% werden, und man kann dort die gerade bearbeitete Seite
+% offen lassen)
+
+% Im figures Ordner müssen die Bilder z.B. in pdf oder jpg Format liegen,
+% mit pdflatex können *keine* eps Bilder benutzt werden.
+% Das pdf file darf beim Kompilieren nicht 
+% im Acrobat Reader geöffnet sein!!!
+
+% um ps-file zu erzeugen:
+% compilieren mit:
+% latex 
+% bibtex
+% latex 
+% latex 
+% dvips
+
+% dvips Aufruf für Type-1 Schriften: 
+% dvips -t a4 -Ppdf 
+% (alte GhostScript-Version: dvips -t a4 -Ppdf -G0) 
+% Umwandeln in pdf mit Acrobat Distiller 
+% oder mit ps2pdf (in GhostScript enthalten)
+
+
+\documentclass[a4paper, twoside, 11pt]{report}
+
+\newif\ifmakeindex
+\makeindextrue % generate index
+%\makeindexfalse % don't generate index
+
+\ifmakeindex
+% fuer Stichwortverzeichnis
+\usepackage{makeidx}
+
+% Stichwortverzeichnis erstellen
+\makeindex
+\fi
+
+
+\newif\ifenglish
+\englishtrue   % english document
+%\englishfalse  % german document
+
+\usepackage[margin=1cm,format=hang,font=small,labelfont=bf,textfont=sl]{caption}
+% angepasste Bildunterschriften
+% Doku siehe beigefügtes pdf-file
+
+\usepackage{subfigure}
+
+\usepackage[english]{babel}
+
+\usepackage[latin1]{inputenc}
+% Unterstuetzen von deutschen Umlauten
+
+\usepackage{t1enc}
+% Verwenden von DC-Fonts (erlaubt richtiges Trennen
+% auch in Worten mit Umlauten)
+
+%\usepackage{times} 
+  % Saves a lot of ouptut space in PDF...
+  % ..after conversion with ps2pdf or Adobe Distiller	 
+	% ändert aber die Schriftart! (Times statt computer modern roman)
+\usepackage{courier} % fett *und* typewriter nur damit möglich?
+% ändert normale Schrift nicht!
+
+\usepackage{cite}
+% Automatisches Zusammenfassen von Literaturstellen
+
+\usepackage{fancyheadings}	
+%STY-file fancyheadings.sty nicht standardmäßig in miktex enthalten
+%evtl. durch fancyhdr ersetzen
+
+\usepackage{float}
+%This package improves the interface for defining floating objects such
+%as figures and tables in LaTeX.  It adds the notion of a `float style'
+%that governs appearance of floats.  New kinds of floats may be defined
+%using a \newfloat command analogous to \newtheorem.  This style option
+%also incorporates the functionality of David Carlisle's style option
+%`here', giving floating environments a [H] option which means `PUT IT
+%HERE' (as opposed to the standard [h] option which means `You may put
+%it here if you like').
+
+\usepackage{verbatim}		
+%This package reimplements the L A T E X verbatim and verbatim* envi- 
+%ronments. In addition it provides a comment environment that skips any 
+%commands or text between \begin{comment} and the next \end{comment}. 
+%It also defines the command verbatiminput to input a whole file verbatim. 
+
+\usepackage{amsmath}
+
+%\usepackage{rotating}
+
+\usepackage{array}
+% wird benutzt von macro.tex für \Case
+
+\usepackage{ifthen}
+% wird benutzt von macro.tex \ifthenelse
+
+\usepackage{longtable}
+% für lange Tabellen größer als eine Seite mit \begin{longtable} .. \end{longtable}
+
+\usepackage{varioref}
+% Kommando \vref verweist mit Seitenzahl
+
+\usepackage{readfile}
+% ASCII-File einbinden mit
+% \readit{fftdb.m}{\tt} 
+% 2. Argument (\tt) gibt zu benutzende Schriftart an 
+\usepackage{shapepar}
+\usepackage{setspace}
+\usepackage{colortbl}
+\usepackage{color}
+\usepackage{xcolor} 
+
+\usepackage{listings}
+
+\lstloadlanguages{}
+
+\lstloadlanguages{C,C++,Java,Matlab,HTML,TeX,XML}
+
+
+%\lstset{}% restore default
+%# title={Titel}:  gibt einen Titel zur Umgebung an (erscheint über dem Code zentriert)
+%# caption={Titel}:  
+%# label=Name:
+
+\lstset{
+				frame=lines, %Umrandung (single|none|shadowbox|lines|bottomline|topline|leftline)
+				framerule=1pt, %Rahmenbreite
+				tabsize=4, %Anzahl der Zeichen für ein TAB
+				backgroundcolor=\color{lightgray}, %Hintergrundfarbe
+				emph={}, %hebt die angegebenen Wörter hervor
+				emphstyle=\underbar, %unterstreicht hervorgehobene Wörter
+				columns=fixed, %Zeichenabstand (fixed | flexible | fullflexible)
+				lineskip=0pt, %Zeilenabstand
+				basicstyle=\ttfamily,%\ttfamily,
+				identifierstyle=\color{black},
+        commentstyle=\color{darkgreen},
+        stringstyle=\color{viola},
+        keywordstyle=\color{darkblue},
+				ndkeywordstyle=\color{black},
+				showspaces=false,
+				showtabs=false,
+				numbers=none, %Zeilennummern (none|left|right)
+				%numbertype=\ttfamily,
+				breaklines=true,
+        captionpos=b,
+        extendedchars=false
+}
+
+%\usepackage{fancybox}
+%\usepackage{theorem}
+%\usepackage{amsbsy}
+%\usepackage{nomencl}        % unterstützt Symbolverzeichnisse
+%\usepackage{makeidx}
+%\usepackage{multind}
+
+\def\boxes{yes}
+% \boxes == yes makes boxes around desired formulas by \Mbox
+% wird benutzt von macros.tex
+ 
+
+% pdf-tex settings:
+% ------------------------
+% detect automatically if run by latex or pdflatex
+
+
+\usepackage{ifpdf}
+%\newif\ifpdf  
+%\ifx\pdfoutput\undefined
+%   \pdffalse
+%\else
+%   \pdfoutput=1
+%   \pdftrue
+%\fi
+
+\ifpdf % compiling with pdflatex
+   \usepackage[pdftex]{graphicx}
+   \DeclareGraphicsExtensions{.pdf, .png, .jpg}
+   \usepackage[pdftex,
+	bookmarks,
+	%colorlinks=false, % instead of colors, now boxes are used for links
+	colorlinks=true,
+	urlcolor=black, %blue,
+	linkcolor=black, %red, %normal internal links
+	citecolor=black, %green, %citation links
+	%pagebackref, %link from references back to page of citation
+	linktocpage, 
+	% im Inhaltsverzeichnis Link auf Seitenzahl (sonst Probleme bei langen Zeilen)
+	%breaklinks = true, % für Links länger als 1 Zeile
+	%hypertexnames = false,  % für Links zu Figures?
+	bookmarksopen, %open all bookmark folders
+	bookmarksnumbered, %use section numbers with bookmarks
+    pdfpagemode=UseOutlines, %show bookmarks
+	% http://www.tex.ac.uk/cgi-bin/texfaq2html?label=pdfpagelabels
+	plainpages=false, % eigene Seitenanker für römische/arabische Seitenzahlen
+	pdfpagelabels, % im Abode Reader Seitenzahl als z.B. "iii (3 von 20)" anzeigen
+%	pdfstartview=FitH
+	pdfstartview=FitV
+	]{hyperref}
+    \pdfadjustspacing=1                %%% force LaTeX-like character spacing
+    \pdfcompresslevel=9
+	\pdfcatalog{                 
+	% Catalog dictionary of PDF output. 
+    % /PageMode /UseNone          
+    % /URI (http://www.fi.muni.cz/)
+	%       
+	% pdfscreen-like setting might look like:
+	%     /PageMode /none 
+	%     /ViewerPreferences << 
+	%         /HideToolbar true            
+	%         /HideMenubar true 
+	%         /HideWindowUI true 
+	%         /FitWindow true 
+	%         /CenterWindow true 
+	%	
+	% /PageMode determines how Acrobat displays the document on startup. 
+	% The possibilities for the latter are explained below:
+	% Supported /PageMode values.
+	% /UseNone 		neither outline nor thumbnails visible
+	% /UseOutlines 	outline visible
+	% /UseThumbs 	thumbnails visible
+	% /FullScreen 	full--screen mode
+	% In full--screen mode, there is no menu bar, window controls, 
+	% nor any other window present. The default setting is /UseNone.
+	} %end of \pdfcatalog
+\else % compiling with latex
+  \usepackage[dvips]{graphicx}
+%  \usepackage{color}
+  \DeclareGraphicsExtensions{.eps}
+  \usepackage[
+    dvips,
+%	ps2pdf,  % statt dvips, Unterschied???
+	bookmarks,
+  	colorlinks=false,  % for final paper without colors
+%  	colorlinks=true,
+	linktocpage, 	
+	% im Inhaltsverzeichnis Link auf Seitenzahl (sonst Probleme bei langen Zeilen)
+	%breaklinks = true, % für Links länger als 1 Zeile
+	% funktioniert *nicht* korrekt für lange Zeilen mit gs < 7.05.3 ?
+%	pdfstartview=FitH, % funktioniert NICHT mit Adobe Distiller
+	bookmarksopen, %open all bookmark folders
+	bookmarksnumbered, %use section numbers with bookmarks
+    pdfpagemode=UseOutlines, %show bookmarks
+	pdfstartview=FitV
+   ]{hyperref}
+  % hyperrefs are active is the pdf file after conversion
+  \hypersetup{
+	pdfcreator  = {LaTeX with hyperref package},
+	pdfproducer = {dvips + ps2pdf}
+  }
+\fi
+
+% CHANGE TITLE AND AUTHOR !!!
+\hypersetup{
+  pdftitle={Studien/Diplomarbeit},
+	pdfauthor={Autor},
+	pdfsubject  = {Studien/Diplomarbeit, UniBwH, Professur ANT, \today},
+	pdfkeywords = {}
+}
+
+% ------------------------
+
+\input{macros.tex}
+
+% make ',' an ordinary Symbol in decimal numbers
+% Unterdrückung des Zwischenraums hinter einem Komma (z.B. in Dezimalzahlen)
+% Steht im Mathemodus hinter dem Komma ein Leerzeichen, wird es als Trennzeichen
+% (mit Zwischenraum) benutzt, sonst als Dezimalkomma.
+ \mathchardef\CommaOrdinary="013B
+ \mathchardef\CommaPunct   ="613B
+ \mathcode`,="8000   % , im Math-Mode aktiv ("8000) machen
+ {\catcode`\,=\active
+  \gdef ,{\obeyspaces\futurelet\next\CommaCheck}}
+ \def\CommaCheck{\if\space\next\CommaPunct\else\CommaOrdinary\fi}
+
+\input{layout.tex}
+
+\addto\captionsenglish{% 
+	\renewcommand{\lstlistlistingname}{List of Sourcecodes} % default: "Listings"
+	\renewcommand{\lstlistingname}{Sourcecode} % default: "Listing"
+}
+
+
+%\makeglossary
+
+\begin{document}
+\include{colors} % several predefined colors - including the HSU corporate Design.
+
+\pagenumbering{roman} % sonst gibt es 2 mal Seiten 1 und 2 (arabisch)
+% so werden Probleme bei hyperlinks vermieden
+
+\include{title_en}
+\thispagestyle{empty} % Titelrückseite (S. 2) ohne Seitennummer
+
+\cleardoublepage
+
+\newcounter{pageno}
+\setcounter{pageno}{1} %titlepage = page 1, but pagenumber not printed
+\addtocounter{pageno}{1}
+
+\cleardoublepage
+\include{abstract}
+
+\cleardoublepage
+\include{statement}
+
+\cleardoublepage
+\include{foreword}
+
+\cleardoublepage
+\input{fanc_h_2.tex} % set fancy headings
+\include{toc}
+\cleardoublepage
+
+% Hier wird das Symbolzeichnis eingefügt
+% Falls es nicht gewünscht ist, sind die folgenden sechs Zeilen auszukommentieren
+\cleardoublepage % to get correct page no. in TOC
+\phantomsection
+\markboth{\bfseries LIST OF SYMBOLS}{\bfseries LIST OF SYMBOLS}
+\addcontentsline{toc}{chapter}{\protect\numberline{List of Symbols}}
+\include{symbol_list}
+
+\cleardoublepage
+\setcounter{page}{1}
+\renewcommand{\thepage}{\arabic{page}}
+
+%============================================================================
+%============================================================================
+
+\cleardoublepage
+\include{chap1}
+
+\cleardoublepage
+\include{chap2}
+
+\cleardoublepage
+\include{chap3}
+
+%############# appendix #################
+\cleardoublepage
+\renewcommand{\chaptername}{\appendixname} %if name appears in header
+
+\begin{appendix}
+
+\include{anhang1}
+
+\cleardoublepage
+\include{anhang2}
+
+\end{appendix}
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\protect\numberline{List of Abbreviations}}
+\include{abbreviation}
+
+%Softwareverzeichnis
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\protect\numberline{List of Software}}
+\include{softwareeng}
+
+\cleardoublepage
+\include{bibeng}
+
+\ifmakeindex
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\protect\numberline{Index}}
+% Stichwortverzeichnis endgueltig anzeigen
+\printindex
+\fi
+
+\end{document}

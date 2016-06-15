@@ -1,0 +1,108 @@
+\ProvidesPackage{beamerinnerthemehsuant}
+
+\defbeamertemplate*{title page}{hsuant}[1][]
+{
+  \vskip 1em
+  \hskip .05\linewidth
+  %\includegraphics[width=.15\linewidth]{figures/ant_logo}
+  \pgfuseimage{ant_logo}
+  \parbox[b]{.55\linewidth}
+    {\tiny
+    \usebeamercolor[fg]{institute}
+    %\textbf{Department of Signal Processing\\and Communications}\\\\
+    \textbf{Professur\\Allgemeine Nachrichtentechnik}\\\\
+    {\it\raggedright Prof. Dr.-Ing. Udo Zölzer}
+  }
+  \pgfuseimage{HSU-logo_farbe_klein}%
+  %\includegraphics[width=.2\textwidth]{figures/HSU-logo_farbe}
+  %\includegraphics[width=.2\textwidth]{figures/HSU-logo_farbe_klein}
+   \vskip 2em %\vfill
+  \begin{centering}
+    \begin{beamercolorbox}[sep=8pt,center]{title}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%
+    \end{beamercolorbox}%
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center]{institute}
+      \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center]{date}
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}\vskip0.5em
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+  \end{centering}
+  \vskip 0pt plus 1filll
+  \leavevmode%
+  \begin{beamercolorbox}[wd=\the\paperwidth]{frametitle}%
+    \begin{pgfpicture}%
+      \pgfpathrectangle{\pgfpoint{0pt}{0pt}}{\pgfpoint{\paperwidth}{0pt}}%
+      \pgfusepath{use as bounding box}%
+      \pgfseteorule
+      \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\paperwidth}{\paperheight}}%
+      \pgfusepath{clip}%
+      \pgfpathrectangle{\pgfpoint{-0.1\paperwidth}{0cm}}{\pgfpoint{1.2\paperwidth}{\paperheight}}%
+      \pgfpathellipse{\pgfpoint{0.3077\paperwidth}{0.7614\paperwidth}}
+                     {\pgfpoint{\paperwidth}{0pt}}
+                     {\pgfpoint{0pt}{0.7071\paperwidth}}
+      %\pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\@tempdima}{0cm}}%
+%       \pgfusepath{use as bounding box}%
+%       \pgftransformyshift{-10pt}%
+%       \pgfpathmoveto{\pgfpointorigin}%
+%       \pgfpathparabola{\pgfpointorigin}{\pgfpoint{\@tempdima}{1.5cm}}%
+%       \pgfpathlineto{\pgfpoint{\@tempdima}{-15pt}}%
+%       \pgfpathlineto{\pgfpoint{0pt}{-15pt}}%
+      \pgfpathclose%
+      \pgfusepath{stroke,fill}%
+    \end{pgfpicture}%
+  \end{beamercolorbox}%
+}
+
+
+\defbeamertemplate*{frametitle}{hsuant}[1][left]
+{
+  \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
+  \@tempdima=\textwidth%
+  \advance\@tempdima by\beamer@leftmargin%
+  \advance\@tempdima by\beamer@rightmargin%
+  \begin{beamercolorbox}[sep=0.3cm,#1,wd=\the\@tempdima]{frametitle}
+    \def\boxheight{2.5em} % Höhe der parboxen für 2 Zeilen Folientitel
+    \parbox[c][\boxheight]{.75\linewidth}%
+    {%
+      {\raggedright\usebeamerfont{frametitle}\insertframetitle\\}%
+      {%
+        \ifx\insertframesubtitle\@empty%
+        \else%
+        {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}%
+        \fi
+      }%
+    }%
+    \hfill%
+    \parbox[c][\boxheight]{.25\linewidth}%
+    {%
+      \begin{flushright} % rechtsbündig
+        \pgfuseimage{HSU-logo_farbe_klein}%
+      \end{flushright}%
+    }%
+    \par%
+    \parbox[c][1pt]{.75\linewidth}{\rule[0pt]{\linewidth}{.7pt}}%
+  \end{beamercolorbox}%
+}
+
+\beamertemplateballtoc
+%Installs a table of contents template in which small balls are shown before each section and subsection.
+
+%\beamertemplatedotitem
+%Changes the symbols shown in an itemize environment to dots.
+
+\defbeamertemplate*{itemize toc}{hsured}{\rule[0.4ex]{0.7ex}{0.7ex}}
+\defbeamertemplate*{itemize item}{hsured}{\rule[0.4ex]{0.7ex}{0.7ex}}
+\defbeamertemplate*{itemize subitem}{hsured}{--}
+\defbeamertemplate*{itemize subsubitem}{hsured}{--}
+

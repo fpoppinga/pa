@@ -1,0 +1,44 @@
+%$$$$$$$$$$$$$$$ tableofcontents $$$$$$$$$$$$$$$$$
+\ifenglish
+	\newcommand{\chapname}{Chapter}
+\else
+	\newcommand{\chapname}{Kapitel}
+\fi % end of \ifenglish\renewcommand{\chaptername}{} %if name appears in header
+
+\setlength{\parskip}{0ex}
+\renewcommand{\baselinestretch}{1}
+\normalsize
+
+\cleardoublepage % to get correct page no. in TOC
+\pdfbookmark[1]{\contentsname}{toc}  % Bookmark auf Inhaltsverzeichnis im pdf file
+\tableofcontents
+
+
+\setlength{\parskip}{1ex}
+\cleardoublepage % to get correct page no. in TOC
+\phantomsection
+\setcounter{lofdepth}{2}
+% subfigures werden mit aufgelistet in der LOF
+\addcontentsline{toc}{chapter}{\protect\numberline{\listfigurename}}
+\listoffigures
+
+\cleardoublepage % to get correct page no. in TOC
+\phantomsection
+\addcontentsline{toc}{chapter}{\protect\numberline{\listtablename}}
+\listoftables
+
+\cleardoublepage % to get correct page no. in TOC
+\phantomsection
+\addcontentsline{toc}{chapter}{\protect\numberline{\lstlistlistingname}}
+\lstlistoflistings
+
+
+\renewcommand{\baselinestretch}{1.0}
+\normalsize
+
+\cleardoublepage % to get correct page no. in TOC
+
+\setlength{\parskip}{\parspacing}
+
+\clearpage
+\renewcommand{\chaptername}{\chapname} %if name appears in header

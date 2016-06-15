@@ -1,0 +1,32 @@
+\ProvidesPackage{beamerouterthemehsuant}
+
+\mode<presentation>
+
+\setbeamercolor*{author in head/foot}{parent=palette primary}
+\setbeamercolor*{title in head/foot}{parent=palette primary}
+
+\defbeamertemplate*{footline}{hsuant theme}
+{
+  \leavevmode%
+  %\begin{beamercolorbox}[wd=\paperwidth,ht=14pt,dp=1ex]{author in head/foot}%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=10pt]{author in head/foot}%
+    \parbox[c]{18pt}
+    {
+      \pgfuseimage{ant_logo_red}
+    }% end of parbox
+    \makebox{%
+      \usebeamerfont{author in head/foot}\insertshortauthor\ -- \usebeamerfont{title in head/foot}\insertshorttitle%
+    }
+    \hfill%
+    \makebox{%
+      \usebeamerfont{date in head/foot}\insertframenumber{} / \inserttotalframenumber%
+    }
+    \quad%
+  \end{beamercolorbox}%
+  \vskip0pt%
+}
+
+\setbeamersize{text margin left=1em,text margin right=1em, text margin top=0em}
+
+\mode
+<all>

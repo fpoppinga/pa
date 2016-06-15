@@ -1,0 +1,64 @@
+% Änderungen (neuste oben): 
+%
+%
+% 18.11.2005 (C.Kluender)
+% - Problem vom 09.11.2005 gelöst, lag an einer fehlerhafter Installation von MiKTeX :(
+% - subfigure Package in Vorlage eingefügt und ein Beispiel hinzugefügt
+% - amsfonts Package hinzugefügt, um Mengensymbole von Zahlen zu benutzen
+%
+% 09.11.2005 (C. Kluender)
+% - Hinweis: Versucht subfigure-package einzubauen -> Fehler mit Einbettung Fonts in PDF
+%	     					      Schriftart Computer Modern Roman funktioniert damit nicht
+%						      Beim Umstellung auf Adobe Times funktionierts (times.sty).
+%
+% - Hinweis: Footnotes mit Schriftart Computer Modern Roman nicht möglich. (Keine Ahnung warum). Mit Einbinden des
+% 	     Packages times.sty anstatt courier.sty funktioniert es. Wohl gleicher Fehler, der auch schon bei Ein-
+%	     bindung des subfigure Packetes auftritt.
+%
+% 16.09.2005 (F. Keiler)
+% - Korrektur des Zeilenabstands im Titel
+%
+% 26.08.2005 (F. Keiler)
+% - ergänzte pdflatex Optionen (für korrekte Links in Index):
+%		plainpages=false, % eigene Seitenanker für römische/arabische Seitenzahlen
+%		pdfpagelabels, % im Abode Reader Seitenzahl als z.B. "iii (3 von 20)" anzeigen
+% - Korrektur Umschaltung auf römische Nummerierung
+% - Nutzung des babel-Pakets für Sprachumschaltung
+% - rotating nach hyperref laden
+% - angepasste Index-Stildateien *.ist
+% - batchfiles _call_all.bat und _call_all_en.bat zur Neuerstellung
+%   -> in TeXnicCenter makeindex Optionen (Ausgabe/Ausgabeprofile definieren): 
+%			-g -s index.ist "%bm" 
+%		oder (für engl. Version)
+%			-g -s index_en.ist "%bm" 
+%
+% 21.01.2005 (F. Keiler)
+%	- Umbenennung der Hauptdatei (verher main.tex)
+% - Einbinden des listings Pakets für Quellcodes mit Beispiel 
+%
+% 29.10.2004 (F. Keiler):
+% - In Kap. 1 Gleichungsbeispiel für Vektoren/Matrizen in fetter Schreibweise
+% - main_2up.tex zum Ausgeben von 2 Seiten verkleinert auf einer
+%   (arbeitet mit pdflatex und benötigt das pdf-file des Dokuments)
+%
+% 26.08.2004 (F. Keiler):
+% - Erzeugen eines Index, aber Problem bei Umlauten am Anfang der Einträge
+% makeindex-Aufruf:
+% makeindex -g -s index_umlauts.ist main
+%
+% 17.08.2004 (F. Keiler):
+% - Änderungen in layout.tex für Platzierung von Bildern auf Seiten
+%
+% 12.08.2004 (F. Keiler):
+% - Es ist nun möglich, auch englische Arbeiten mit korrekten
+%   Bezeichnungen für Kapitel etc. zu erstellen
+%   (weiter unten bei \newif\ifenglish die entsprechende Zeile aktivieren
+%   oder main_en.tex für englische Version benutzen)
+%
+% 05.08.2004 (O. Weikert): 
+% - Symbolverzeichnis ist beispielhaft eingefügt 
+%
+% 12.07.2004 (F. Keiler):
+% - Paket caption zur Formatierung der Bildunterschriften
+% - neuer BibTeX-Stil (siehe bib.tex)
+% (benutzte Formatierungen sind natürlich teils Geschmackssache...)

@@ -1,0 +1,52 @@
+% define the size of the region where text can appear on the page
+\setlength{\hoffset}{-1in}
+\textwidth 15.7cm
+\textheight 24cm %24.4cm
+\topmargin -1cm %-1.6cm
+\oddsidemargin 2.7cm
+\evensidemargin 2.6cm
+%\oddsidemargin -3cm
+%\evensidemargin -3cm
+\headheight 15pt%[12]
+\headsep 1.2cm%[25pt]
+%\setlength{\footheight}{15pt} %[12]
+%\columnsep 0.8cm
+
+% setzt den Einzug bei neuem Absatz zu null
+\setlength{\parindent}{0pt}
+% oder \parindent0cm
+
+%Abstand vor neuem Absatz
+%wird in abstract.tex benutzt
+\def\parspacing{2.5ex}
+\setlength{\parskip}{\parspacing} 
+
+% enable following command if you don't want extra space after points
+\frenchspacing
+
+\renewcommand{\textfraction}{0.1}
+% Mindestanteil an Text auf einer Seite, 
+% in Prozent, default: 0.2
+ 
+\renewcommand{\topfraction}{1}
+% Maximaler Anteil der von Gleitobjekten am Kopf der Seite 
+% eingenommen werden kann, in Prozent, default: 0.7
+
+\setcounter{topnumber}{10} 
+% number of float objects at top of page, default: 2
+
+\setcounter{totalnumber}{10} 
+% number of float objects on one page, default: 3
+
+
+\setcounter{secnumdepth}{3}
+% depth of numbering, see companion p.20-21
+% for report:   chapter: 0, section: 1, subsection: 2
+%       subsubsection:3,paragraph: 4,   subparagraph: 5
+
+\setcounter{tocdepth}{2}
+
+\setlongtables
+% for equal column width on different pages of a longtable, see companion, p 122
+% has to be disabled to reset, only widest width is saved, 
+%so there's an error, if this entry is shortened!

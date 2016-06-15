@@ -27,9 +27,28 @@ size_guard = size(guard, 2);
 figure(); 
 set(gcf,'numbertitle','off','name','Chirp Symbols in Time Domain');
 subplot(2, 1, 1); plot(t, x1);
+title('Up-Chirp (1kHz to 3kHz)');
 xlabel('t in s'), ylabel('x1(t)');
 subplot(2, 1, 2); plot(t, x2);
+title('Down-Chirp (3kHz to 1kHz)');
 xlabel('t in s'), ylabel('x2(t)');
 
 %% Correlation
 
+signal = [zeros(1, size(x1, 2)) x1];
+
+autoCorrelation = correlate(signal, x1);
+crossCorrelation = correlate(signal, x2);
+
+% plot symbols
+figure(); 
+set(gcf,'numbertitle','off','name','Correlation of Symbols');
+subplot(2, 1, 1); plot(autoCorrelation);
+axis([0 size(signal, 2) -0.3 0.3]);
+title('Correlation of same symbol (centered)');
+xlabel('k'), ylabel('E\{x1, x1\}(k)');
+
+subplot(2, 1, 2); plot(crossCorrelation);
+axis([0 size(signal, 2) -0.3 0.3]);
+title('Correlation of different symbols (centered)');
+xlabel('k'), ylabel('E\{x1, x2\}(k)');

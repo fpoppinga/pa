@@ -29,9 +29,12 @@ set(gcf,'numbertitle','off','name','Chirp Symbols in Time Domain');
 subplot(2, 1, 1); plot(t, x1);
 title('Up-Chirp (1kHz to 3kHz)');
 xlabel('t in s'), ylabel('x1(t)');
+pbaspect([5 1 1]);
+
 subplot(2, 1, 2); plot(t, x2);
 title('Down-Chirp (3kHz to 1kHz)');
 xlabel('t in s'), ylabel('x2(t)');
+pbaspect([5 1 1]);
 
 %% Correlation
 
@@ -47,8 +50,10 @@ subplot(2, 1, 1); plot(autoCorrelation);
 axis([0 size(signal, 2) -0.3 0.3]);
 title('Correlation of same symbol (centered)');
 xlabel('k'), ylabel('E\{x1, x1\}(k)');
+pbaspect([5 1 1]);
 
 subplot(2, 1, 2); plot(crossCorrelation);
 axis([0 size(signal, 2) -0.3 0.3]);
 title('Correlation of different symbols (centered)');
 xlabel('k'), ylabel('E\{x1, x2\}(k)');
+pbaspect([5 1 1]);

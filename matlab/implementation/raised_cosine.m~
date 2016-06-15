@@ -1,0 +1,9 @@
+function [x] = raised_cosine(ts, fs, beta)
+%SQRT_RAISED_COSINE Returns a sqrt-raised-cosine with roll-of factor and
+%size as specified.
+%   Detailed explanation goes here
+
+    
+
+end
+

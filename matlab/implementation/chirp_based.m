@@ -19,17 +19,17 @@ x1 = chirp(f1, f2, fs, T);
 [x2, t] = chirp(f2, f1, fs, T);
 
 x1_shaped = x1 .* shape;
-x2_shaped = x2 .* shape;
+x2_shaped = x2 .* shape; 
 size_symbol = size(x1, 2);
 
 % set up preamble, this is an up chirp with five times the 
 % duration of the symbol.
 preamble = chirp(f1, f2, fs, 5 * T);
-preamble_shaped = raised_cosine(5 * T, fs, 0.1).*preamble; 
+preamble_shaped = raised_cosine(5 * T, fs, 0.1).*preamble;
 
 % prepare guard interval
 T_guard = 0.002;
-guard = zeros(1, ceil(T_guard * fs)); 
+guard = [];%zeros(1, ceil(T_guard * fs)); 
 size_guard = size(guard, 2);
 
 % plot symbols
@@ -46,7 +46,7 @@ xlabel('t in s'), ylabel('x2(t)');
 % preamble is included once.
 
 bitsPerPackage = 16;
-bits = [1 0];
+bits = [1 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1];
 
 signal = [preamble];
 signal_shaped = [preamble_shaped];
@@ -73,14 +73,14 @@ tx = [signal guard signal guard signal guard signal];
 tx_shaped = [signal_shaped guard signal_shaped guard signal_shaped guard signal_shaped];
 
 % with noise
-% tx = awgn(tx, -2);
+tx = awgn(tx, -2);
 
 %% Spectrum of signal
 
 figure();
 hold on;
 plot_spectrum(tx, fs);
-plot_spectrum(tx_shaped, fs);
+% plot_spectrum(tx_shaped, fs);
 %% Receiver
 
 % listen for an time interval, long enough to record two full preambles.
@@ -163,7 +163,7 @@ corr_symbol_x1 = [];
 corr_symbol_x2 = [];
 
 detected = [];
-while i < (size(buffer1, 2) - step) 
+while i <= (size(buffer1, 2) - step) 
     window = buffer1(i:(i + step));
     
     corr_x1 = correlate(window, x1);

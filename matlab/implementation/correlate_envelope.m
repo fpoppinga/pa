@@ -12,7 +12,6 @@ function [correlation] = correlate_envelope(x1, x2)
     X1 = fft(x1);
     X2 = fft(fliplr(x2));
     
-    
     h = [zeros(1, ceil(size(X1, 2) / 2)) 2*ones(1, floor(size(X1, 2) / 2))];
     correlation = abs(ifft(X1.*X2.*h)) ./ size(X1, 2);
 end

@@ -1,0 +1,54 @@
+% This is READFILE.STY in text format, as of June 17, 1991.
+%------------------------------------------------------------------------------
+% Aenderungen : 18.06.91, Lutz Behrens  : Einfuegen der Fontwahlmoeglichkeit in 
+%               ----------------------    das Kommando \readit
+%
+%-------------------------------------------------------------------------------
+%
+%                   Verwendungszweck 
+%                   ==================
+%      
+%    In "readfile.sty" wird das Kommando \readit
+%    definiert. Mit dieser Anweisung kann man ASCII-Dateien
+%    in ein Latex-Dokument einlesen, ohne dass deren Inhalt
+%    formatiert wird. Der Effekt entspricht also dem des
+%    Verbatim-Environments. Zusaetzlich ist der Zeichensatz
+%    waehlbar, mit dem der Dateiinhalt dargestellt wird. 
+%    
+%      
+%                   Aufruf von "readfile" 
+%                  ======================           
+%  
+%    Nachdem in der Dokumentenstil-Vereinbarung die Option
+%    "readfile" angegeben wurde -- z.B.:
+%      \documentstyle[twoside,11pt,frame,readfile]{article_rv} 
+%    -- steht dem Benutzer/der Benutzerin folgender Befehl zur 
+%    Verfuegung:
+%
+%        \readit{Dateiname}{font}
+%
+%    Dort, wo dieses Kommando auftaucht, wird die 
+%    Datei "Dateiname" eingefuegt und der gesamte Text genau
+%    so ausgegeben wie er in der Datei steht -- bei 
+%    Verwendung des angegebenen Fonts "font". Als Font kann man die in
+%    Latex verfuegbaren Zeichensaetze angeben, z.B. \tt, \it,
+%    \sl etc. Zu beruecksichtigen ist aber, dass nur mit \tt
+%    alle sichtbaren ASCII-Zeichen darstellbar sind. Bei den
+%    anderen Fonts fehlen die Zeichen \,{,},<,>,| und _.
+%
+%______________________________________________________________________
+
+\def\readit#1#2{\begingroup\@endpefalse
+      \trivlist \item[]\if@minipage\else\vskip\parskip\fi
+      \leftskip\@totalleftmargin\rightskip\z@
+      \parindent\z@\parfillskip\@flushglue\parskip\z@
+      \@tempswafalse \def\par{\if@tempswa\hbox{}\fi\@tempswatrue\@@par}
+      \obeylines #2 \catcode``=13 \@noligs \let\do\@makeother \dospecials 
+      \frenchspacing\@vobeyspaces \@myxverbatim{#1}
+      \endgroup}
+
+\begingroup \catcode `|=0 \catcode `[= 1
+\catcode`]=2 \catcode `\{=12 \catcode `\}=12                       
+\catcode`\\=12 |gdef|@myxverbatim#1[|input #1 ] 
+|endgroup
+

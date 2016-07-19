@@ -7,7 +7,7 @@ function [rc] = raised_cosine(time, tmax, beta)
     w = beta * tmax;
     
     for t = time
-        if abs(t) > (1 - beta) * tmax
+        if abs(t) > (1 - beta) * tmax && 
             phase = (tmax - abs(t)) / w;
             rc(k) = cos(0.5*pi*phase - pi/2);
         elseif abs(t) < tmax

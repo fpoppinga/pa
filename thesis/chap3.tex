@@ -1,0 +1,131 @@
+\chapter{Drittes Kapitel}
+
+
+Dies ist ein Text, der nur ein Beispiel darstellt. Dies ist ein Text, der nur ein 
+Beispiel darstellt. Dies ist ein Text, der nur ein Beispiel darstellt.
+
+Ein Zitat: \cite{fli:mult}.
+
+Hier ein Verweis auf einen anderen Abschnitt: \ref{sec:abschnittlabel}.
+
+Hier ein Verweis auf Abbildung \ref{fig:bildlabel_1}.
+
+\index{Bild einbinden!ohne Makro}
+
+\begin{figure}[ht]
+	\centerline{\includegraphics[scale=0.5]{figures/dummy}}
+	\caption{Eine Dummy Abbildung. Eine lange Bildunterschrift. Eine lange Bildunterschrift. Eine lange Bildunterschrift. Eine lange Bildunterschrift. Eine lange Bildunterschrift.}  
+	\label{fig:bildlabel_1}
+\end{figure}
+
+\begin{figure}[ht]
+	\centerline{\includegraphics[width=1.0\columnwidth]{figures/dummy}}
+	\caption{Noch eine Dummy Abbildung.}    
+	\label{fig:bildlabel_2}
+\end{figure}
+
+Dies ist ein Text, der nur ein Beispiel darstellt. Dies ist ein Text, der nur ein 
+Beispiel darstellt. Dies ist ein Text, der nur ein Beispiel darstellt.
+Dies ist ein Text, der nur ein Beispiel darstellt. Dies ist ein Text, der nur ein 
+Beispiel darstellt. Dies ist ein Text, der nur ein Beispiel darstellt.
+
+
+%\clearpage
+%\pagebreak
+
+\section{Abschnitt eins}
+
+\label{sec:abschnittlabel}
+
+Dies ist ein Text, der nur ein Beispiel darstellt. Dies ist ein Text, der nur ein 
+Beispiel darstellt. Dies ist ein Text, der nur ein Beispiel darstellt.
+Dies ist ein Text, der nur ein Beispiel darstellt. Dies ist ein Text, der nur ein 
+Beispiel darstellt. Dies ist ein Text, der nur ein Beispiel darstellt.
+
+\subsection{Unterabschnitt eins-zwei}
+
+Dies ist ein Text, der nur ein Beispiel darstellt. Dies ist ein Text, der nur ein 
+Beispiel darstellt. Dies ist ein Text, der nur ein Beispiel darstellt.
+Dies ist ein Text, der nur ein Beispiel darstellt. Dies ist ein Text, der nur ein 
+Beispiel darstellt. Dies ist ein Text, der nur ein Beispiel darstellt.
+
+
+\section{Impulsformer - Wurzel-Cosinus-Rolloff Filter}
+
+Für die Nachrichtenübertragung werden Sende- und Empfangsfilter benötigt, die der 
+Matched-Filter Bedingung genügen. Die Faltung des Sende- mit dem Empfangsfilter sollte 
+ferner eine Cosinus-Rolloff-Charakteristik aufweisen. Für die Sende- und Empfangsfilter 
+werden daher Filter mit Wurzel-Cosinus-Rolloff-Charakteristik eingesetzt.
+
+Die zeitkontinuierliche Version eines Cosinus-Rolloff Filters hat den folgenden 
+Frequenzgang
+
+\begin{equation}
+H_{CR0}(j\omega) = 
+\begin{cases}
+1 & \mbox{für} \; \frac{\mid \omega \mid}{\omega_c} \leq 1-r \\
+\frac{1}{2} \biggl(1 + \cos\biggl[ \frac{\pi}{2r}( \frac{\omega}{\omega_c} - 
+(1-r))\biggr]  \biggl)
+& \mbox{für} \; 1-r \leq \frac{\mid \omega \mid}{w_c} \leq 1+r \\
+0 & \mbox{für} \; \frac{\mid \omega \mid}{\omega_c} \geq 1+r 
+\end{cases}
+\label{eq:H_CRO}
+\end{equation}
+
+
+
+\section{pdf features}
+
+Link auf E-Mail:
+\href{mailto:dafx2002@unibw-hamburg.de}{dafx2002@unibw-hamburg.de}
+
+Link auf webpage: \\
+DAFx main page: \href{http://www.dafx.de}{http://www.dafx.de}
+
+Grafik mit Link auf webpage:
+\begin{figure}[ht]
+  \centerline{
+	\href{http://www.dafx.de}{\includegraphics[width=1.0\columnwidth]{figures/dummy}}
+	}
+	\caption{Eine Dummy Abbildung mit Link.}    
+	\label{fig:bildlabel_3}
+\end{figure}
+
+
+
+\clearpage
+
+\section{Systemeigenschaften}
+
+Im folgenden sind die verwendeten Parameter mit Zahlenwerten zusammengefasst:
+\begin{itemize}
+\item Symbolübertragungsrate $f_T = 1/T = 2 f_N = 24 \; \mbox{kHz}$ \\
+\item Bitübertragungsrate bei verwendeter QPSK-Modulation $f_B = 2 f_T = 48 \; 
+\mbox{kBit/s}$ \\
+\item Symboldauer $T = \frac{1}{2 f_N} = 41.67 \; \mu$s \\
+\item Nyquistfrequenz $f_N = 12 \; \mbox{kHz}$ \\
+\item Rolloff-Faktor $r = 0.5$ \\
+\item Parameter $M$ gibt den Faktor der Überabtastung an, $M = 2,3,4...$. \\ Bei 
+verwendeter vierfacher Überabtastung $M = 4$. \\
+\item Bandbreite im Übertragungsband (siehe Abbildung \ref{fig:bildlabel_3}) 
+\begin{align}
+B & = 2 \; (1+r) f_N \\
+& = (1+r) f_T \\
+& = 36 \; \mbox{kHz}
+\end{align}
+\item mindestens notwendige Abtastfrequenz nach Abwärtsmischung ins Basisband 
+\begin{align}
+f_A & = 2 \; [2 \; f_N] \geq 2 \; [(1+r) \; f_N] \\
+& = \frac{2}{T} = 2 f_T \\
+& = 48 \; \mbox{kHz}
+\end{align}
+\item Abtastfrequenz bei verwendeter vierfacher Überabtastung nach Abwärtsmischung ins 
+Basisband 
+\begin{align}
+f_A & = 4 \; [2 \;f_N] \geq 4 \; [(1+r)\; f_N] \\
+& = \frac{4}{T} = 4 f_T \\
+& = 96 \; \mbox{kHz}
+\end{align}
+\item Trägerfrequenz $f_0 = 800 \; \mbox{MHz} \; / \; 2 \; \mbox{GHz}$ \\
+\end{itemize}
+

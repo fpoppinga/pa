@@ -117,27 +117,39 @@ peaks2 = findAbsolutePeaks(corr_preamble2, 0.8);
 
 figure();
 set(gcf,'numbertitle','off','name','Correlation of Preamble with Buffers');
-subplot(2, 1, 1); 
-hold all;
-plot(corr_preamble1);
-plot(corr_preamble1_env, '-r');
-plot(peaks1, corr_preamble1_env(peaks1), 'xr');
-pbaspect([5 1 1]);
+% subplot(2, 1, 1); 
+% hold all;
+% plot(corr_preamble1);
+% plot(corr_preamble1_env, '-r');
+% plot(peaks1, corr_preamble1_env(peaks1), 'xr');
+% pbaspect([5 1 1]);
 
+hold all;
+plot(corr_preamble2);
 pbaspect([5 1 1]);
-title('Odd Buffer');
-xlabel('frame index k'), ylabel('corr_{preamble1}(k)');
+title('Buffer Correlated with Preamble');
+xlabel('k'), ylabel('R_{xx_{p}}(k)');
 hold off;
-subplot(2, 1, 2);
+
+cleanfigure;
+matlab2tikz('preambleCorrelation.tex', 'height', '\figureheight', 'width', '\figurewidth');
+
+%% Correlation with envelope detection
+
+figure();
 hold all;
 plot(corr_preamble2);
 plot(corr_preamble2_env, '-r');
 plot(peaks2, corr_preamble2_env(peaks2), 'xr');
 pbaspect([5 1 1]);
-hold off
-title('Even Buffer');
-xlabel('frame index k'), ylabel('corr_{preamble2}(k)');
+title('Envelope Detection on Preamble Correlation');
+xlabel('k'), ylabel('R_{xx_{p}}(k)');
 hold off;
+
+cleanfigure;
+matlab2tikz('preambleCorrelationEnvelope.tex', 'height', '\figureheight', 'width', '\figurewidth');
+
+
 
 %% Slice buffers at peaks of correlation
 % It is assumed, that there will exist only two significant peaks. The

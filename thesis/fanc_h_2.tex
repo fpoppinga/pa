@@ -1,0 +1,31 @@
+\pagestyle{fancyplain}
+
+% Font of the header
+\def\headfont{\bfseries}%\sffamily}
+
+% Gewünschte Formatierung der Kopfzeile, default: alles in Großbuchstaben
+\renewcommand{\chaptermark}[1]
+{\markboth{\chaptername { }\thechapter. #1} 
+{\chaptername { }\thechapter. #1}} 
+% p 99
+% without name ``Chapter'', ``Appendix'' etc:
+%\renewcommand{\chaptermark}[1]{\markboth{\thechapter. #1}{\thechapter. #1}} % p 99
+
+
+% for twoside option:
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername { }\thechapter. #1}{}}
+%\chaptername { }\thechapter. #1}}
+\lhead[\fancyplain{\headfont\thepage}{\headfont\thepage}]
+{\fancyplain{\headfont\rightmark}{\headfont\rightmark}}
+
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+%\lhead{\fancyplain{\headfont \rightmark}{\headfont\rightmark}}
+\rhead[\fancyplain{\headfont\leftmark}{\headfont\leftmark}]
+{\fancyplain{\headfont\thepage}{\headfont\thepage}}
+%\lfoot{\tt Arbeit \emph{Titel} -- Autor}
+%\rfoot{\tt Stand \today} %aktuelles Datum
+\cfoot{}
+%\setlength{\plainfootrulewidth}{0pt}
+%\renewcommand{\footrulewidth}{0pt}
+\setlength{\plainheadrulewidth}{0.4pt}

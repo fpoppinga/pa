@@ -1,0 +1,26 @@
+%########### Bibliography ##############
+\clearpage % to get correct page no. in TOC
+\phantomsection
+\addcontentsline{toc}{chapter}{\protect\numberline{\bibname}}
+
+\renewcommand{\chaptername}{} %if name appears in header
+
+\renewcommand{\baselinestretch}{1}
+\normalsize
+
+% if enabling this command all references of the bib file are listed
+% otherwise only the referenced books are listed in Bibliography section
+%\nocite{*} 
+
+%\bibliographystyle{unsrt}
+%\bibliographystyle{alpha}
+%\bibliographystyle{ALPHADIN}
+
+\bibliographystyle{newalpha} %neuer Stil mit makebst erzeugt
+% newalpha.dbj wurde durch "latex makebst" erzeugt
+% und enthält die Formatierungen (file kann per Hand editiert werden)
+% mit "latex newalpha.dbj" wird das .bst file erzeugt
+
+	
+% In literatur.bib sind die eigentlichen Literaturangaben enthalten
+\bibliography{literatur} % requires file literatur.bib

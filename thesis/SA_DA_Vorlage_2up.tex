@@ -1,0 +1,30 @@
+% erzeugen eines Dokuments mit je 2 Seiten verkleinert
+% auf einer A4 Seite
+% benötigt SA_DA_vorlage.pdf
+
+% Neu erstellen mit:
+% pdflatex SA_DA_vorlage.tex
+% bibtex SA_DA_vorlage.tex
+% pdflatex SA_DA_vorlage.tex
+% pdflatex SA_DA_vorlage.tex
+% pdflatex SA_DA_vorlage_2up.tex
+% (siehe auch batch-file call_pdf2up.bat)
+
+% Das erzeugte File eignet sich zum Ausdrucken und um Papier zu sparen
+% Die hyperlinks des Original-pdf werden nicht übernommen.
+
+\documentclass[a4paper]{article}
+\usepackage{pdfpages}
+% siehe Doku pdfpages.sty
+
+\begin{document}
+
+\includepdf[pages=-,   % alle Seiten
+						nup=1x2,   % 2 Spalten, 1 Zeile logischer Seiten
+						           % eigentl. 1 Spalte, aber Blatt wird dann gedreht... 
+						landscape, % Querformat
+						openright, % auf der rechten Seite starten, damit ungerade Seiten rechts sind
+						frame      % Rahmen um jede Seite
+						]{SA_DA_vorlage.pdf}
+
+\end{document}

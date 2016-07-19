@@ -1,0 +1,22 @@
+%########### Bibliography ##############
+\clearpage % to get correct page no. in TOC
+\phantomsection
+\addcontentsline{toc}{chapter}{\protect\numberline{\bibname}}
+
+\renewcommand{\chaptername}{} %if name appears in header
+
+\renewcommand{\baselinestretch}{1}
+\normalsize
+
+% if enabling this command all references of the bib file are listed
+% otherwise only the referenced books are listed in Bibliography section
+%\nocite{*} 
+
+%\bibliographystyle{unsrt}
+%\bibliographystyle{alpha}
+%\bibliographystyle{ALPHADIN}
+
+\bibliographystyle{IEEEtran} %IEEE Style
+	
+% In literatur.bib sind die eigentlichen Literaturangaben enthalten
+\bibliography{literatur} % requires file literatur.bib

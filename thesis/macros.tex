@@ -1,0 +1,232 @@
+
+%Breite der Bild/Tabellenbeschriftungen:
+%\setlength{\LTcapwidth}{\captionwidth}
+
+%Schriftgröße/Zeilenvorschub in Tabellen:
+\def\tablefontsize{\normalsize}
+\def\tablespacing{1.0} % linespacing in tables
+  
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}} 
+
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}} 
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+
+\newcommand{\bmp}{\begin{minipage}[c]{\columnwidth} \bc}
+% argument: vertical position: c, t, b
+\newcommand{\emp}{\ec \end{minipage} }
+
+\newcommand{\beg}{\hspace{0.5cm}\begin{minipage}{14cm}}
+\newcommand{\eeg}{\end{minipage}\vspace{1cm}}
+
+
+%%%%%%%%%%%%%% tables %%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\bt}[1]
+% #1: table placing: htbp
+    {    \begin{table}[#1] %htbp 
+         \begin{center}
+         \renewcommand{\baselinestretch}{\tablespacing}
+         \tablefontsize
+    }
+
+%Tabelle mit größerem Zeilenvorschub:
+\newcommand{\btline}[2]
+% #1: table placing: htbp
+% #2: linespacing in table, e.g. 1.4
+{   \def\tablespacing{#2}
+    \bt{#1}
+} 
+
+\newcommand {\et}[2] 
+% #1: caption
+% #2: label without 'tab:'
+    {
+     \caption{#1.} 
+     \label{tab:#2}
+     \end{center} 
+     \end{table}
+     \def\tablespacing{1.0} 
+    % reset linespacing for next table
+}
+
+\newcommand {\btab}{\begin{tabular}}
+\newcommand {\etab} {\end{tabular}}
+
+\newcommand{\mc}{\multicolumn}
+\newcommand{\mr}{\multirow}
+
+% columns in math mode:
+\newcolumntype{C}{>{$}c<{$}}
+\newcolumntype{L}{>{$}l<{$}}
+\newcolumntype{R}{>{$}r<{$}}
+
+\newcommand{\pbs}[1]{\let\temp=\\#1\let\\=\temp}
+%preserve backslash, s. companion, p108
+
+
+
+%%%%%%%%%%%%%% figures %%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\fig}[4]{
+% Bild mit 80% der Seitenbreite
+% arguments:	
+% #1: file without extension eps
+% #2: caption
+% #3: label
+% #4: placing of the figure: e.g. htbp
+\begin{figure}[#4]			      
+\begin{center}
+   \includegraphics[width=.8\columnwidth]{figures/#1}
+   \caption{#2.}
+   \label{fig:#3}
+\end{center}
+\end{figure}
+}
+
+\newcommand{\figscale}[5]{
+% arguments:	
+% #1: file without extension eps
+% #2: caption
+% #3: label
+% #4: placing of the figure: e.g. htbp
+% #5: width of figure
+\begin{figure}[#4]			      
+\begin{center}
+   \includegraphics[width=#5\columnwidth]{figures/#1}
+   \caption{#2.}
+   \label{fig:#3}
+\end{center}
+\end{figure}
+}
+
+\newcommand{\figscaletwo}[6]{
+% arguments:	
+% #1: file1 without extension eps
+% #2: file2 without extension eps
+% #3: caption
+% #4: label
+% #5: placing of the figure: e.g. htbp
+% #6: width of figure
+\begin{figure}[#5]			      
+\begin{center}
+   \includegraphics[width=#6\columnwidth]{figures/#1}~\\
+   \includegraphics[width=#6\columnwidth]{figures/#2}
+   \caption{#3.}
+   \label{fig:#4}
+\end{center}
+\end{figure}
+}
+
+\newcommand{\figtwo}[5]{
+% two figures labeled (a) and (b) side by side
+% arguments:	
+% #1: file1 without extension eps
+% #2: file2 without extension eps
+% #3: caption without fullstop
+% #4: label
+% #5: placing of the figure: e.g. htbp
+\begin{figure}[#5]			      
+\begin{center}
+    \btab{cc} 
+   \includegraphics[width=0.45\columnwidth]{figures/#1}
+    &	 
+   \includegraphics[width=0.45\columnwidth]{figures/#2}
+    (a)&(b)
+    \etab 
+	\caption{#3.}
+	\label{fig:#4}
+\end{center}
+\end{figure}
+}
+
+\newcommand{\figTwo}[6]{
+% two figures labeled (a) and (b) on top/bottom
+% arguments:	
+% #1: file1 without extension eps
+% #2: file2 without extension eps
+% #3: caption without fullstop
+% #4: label
+% #5: placing of the figure: e.g. htbp
+% #6: width of figures as ratio, e.g. 0.7
+\begin{figure}[#5]			      
+\begin{center}
+   \includegraphics[width=#6\columnwidth]{figures/#1}
+(a)\\
+\vspace{1 em}
+   \includegraphics[width=#6\columnwidth]{figures/#2}
+    (b)\\
+    \caption{#3.}
+    \label{fig:#4}
+\end{center}
+\end{figure}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\C}[1]{\texttt{#1}} %Typewriter-Font
+\newcommand{\tild}{\~~\hspace{-1 ex}} %Tilde ~
+
+\newcommand{\equi}{\Leftrightarrow} %Äquivalenz <=>
+\newcommand{\concl}{\Rightarrow}    %daraus folgt =>
+%Matrix:
+\newcommand{\matr}[2]{\left ( \begin{array}{#1} #2 \end{array} \right )}
+% #1 alignment of colums, e.g. ccc
+% #2 contents of matrix
+%Vektor:
+\newcommand{\vect}[1]{\left ( \begin{array}{c} #1 \end{array} \right )}
+%Fettschrift im Mathemodus:
+\newcommand{\mbf}[1]{\mathbf{#1}} %boldface
+\newcommand{\gbf}[1]{\boldsymbol{#1}} %boldface greek letters
+%Verweis auf Gleichungen mit Klammern um Gl.-Nr.
+%\newcommand{\eqref}[1]{(\ref{#1})}
+% \eqref defined in package amsmath
+
+
+\newcommand{\freqorig}{\ensuremath{\circ\hspace{-.1em}\mbox{---}\!\bullet}}
+\newcommand{\freq}{\mbox{~}{\circ\hspace{-.1em}\mbox{---}\!\bullet}\mbox{~}}
+	% correspondence symbol time<->freq 
+\newcommand{\freqswap}{\ensuremath{\bullet\!\mbox{---}\hspace{-.1em}\circ}}
+\newcommand{\freqv}{\begin{turn}{90} \freqswap \end{turn}}
+	% vertical correspondence symbol
+	% time 
+	% freq
+\newcommand{\timeh}{\mbox{~}{\bullet\!\mbox{---}\hspace{-.1em}\circ}\mbox{~}}
+	% correspondence symbol freq<->time
+\newcommand{\timev}{\begin{turn}{90} \freqorig \end{turn}}
+	% vertical correspondence symbol
+	% freq
+	% time
+
+\newcommand{\Case}[1]{\left\{ \begin{array}{ll} #1
+    \end{array}\right. } 
+
+
+\newcommand{\Mbox}[1]{
+\ifthenelse{\equal{\boxes}{yes}}
+{%\ensuremath
+\fbox{$\displaystyle #1$}}
+{#1}}
+
+%box around a equationarray
+%argument is the contents of the eqnarray environment
+\newcommand{\Mboxarray}[1]{
+\ifthenelse{\equal{\boxes}{yes}}
+{\bc\fbox{\begin{Beqnarray} #1 \end{Beqnarray}}\ec}
+{\bea #1 \eea}
+}
+
+
+\newcommand{\suml}{\sum\limits}
+% limits of sum UNDER the sign instead of beside it, e.g. in fractions
+
+\newcommand{\intl}{\int\limits}
+% limits of int UNDER the sign instead of beside it
+
+
+\newcommand{\logd}{\mbox{ld\,}} %base 2 logarithm
+
+\newcommand{\erw}[1]{E\left\{#1\right\}} %Erwartungswert

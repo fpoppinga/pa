@@ -1,0 +1,29 @@
+% produces a document with 2 pages in reduced size on a A4 page
+% requires SA_DA_template.pdf
+
+% compile it using:
+% pdflatex SA_DA_template.tex
+% bibtex SA_DA_template.tex
+% pdflatex SA_DA_template.tex
+% pdflatex SA_DA_template.tex
+% pdflatex SA_DA_template.tex
+% (see also batch-file call_pdf2up.bat)
+
+% Das erzeugte File eignet sich zum Ausdrucken und um Papier zu sparen
+% Die hyperlinks des Original-pdf werden nicht übernommen.
+
+\documentclass[a4paper]{article}
+\usepackage{pdfpages}
+% siehe Doku pdfpages.sty
+
+\begin{document}
+
+\includepdf[pages=-,   % alle Seiten
+						nup=1x2,   % 2 Spalten, 1 Zeile logischer Seiten
+						           % eigentl. 1 Spalte, aber Blatt wird dann gedreht... 
+						landscape, % Querformat
+						openright, % auf der rechten Seite starten, damit ungerade Seiten rechts sind
+						frame      % Rahmen um jede Seite
+						]{SA_DA_template.pdf}
+
+\end{document}

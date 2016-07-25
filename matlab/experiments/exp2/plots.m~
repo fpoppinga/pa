@@ -1,0 +1,34 @@
+%%
+Tpacket = ((Tsym + Tg) * 2 + 5 * Tsym + Tg) / 1000;
+maxAchievable = 1 ./ Tpacket * 0.75 * 2;
+fsym = 1./(Tpacket);
+
+%%
+effective = mean(R, 2) ./ maxAchievable';
+
+effectivefit = fit(fsym, effective, 'smoothingspline
+
+figure();
+set(gcf,'numbertitle','off','name','CBOK Data Rage');
+hold all;
+grid on;
+title('CBOK Relative Achievable Data Rate');
+xlabel('T_{packet}^{-1} [Hz]'), ylabel('R_{CBOK} / R_{max}');
+plot(fsym, effective, 'x'); 
+fs = min(fsym):0.1:max(fsym);
+plot(fs, fittedmodel(fs))
+legend('measurements', 'fitted curve');
+hold off;
+
+cleanfigure;
+matlab2tikz('cbok-rate-maxachievable.tex', 'height', '\figureheight', 'width', '\figurewidth');
+%%
+errorfit = fit(Tpacket', mean(1-E, 2), 'smoothingspline');
+
+ts = min(Tpacket):0.1:max(Tpacket);
+figure();
+hold all
+plot(Tpacket, 1-E, 'x')
+plot(ts, errorfit(ts));
+grid on;
+hold off;

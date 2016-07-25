@@ -1,0 +1,3 @@
+PROTOCOL:
+
+* single chirp, f1 = 5kHz, f2 = 10kHz, Tsym = 0.004, TG = 0.0025

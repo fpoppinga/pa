@@ -1,0 +1,37 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=\figurewidth,
+height=0.533\figureheight,
+at={(0\figurewidth,0\figureheight)},
+scale only axis,
+xmin=10,
+xmax=45,
+xlabel={$\text{T}_{\text{packet}}^{\text{-1}}\text{ [Hz]}$},
+xmajorgrids,
+ymin=-0.1,
+ymax=0.4,
+ylabel={$\text{R}_{\text{MCOK}}\text{ / R}_{\text{max}}$},
+ymajorgrids,
+axis background/.style={fill=white},
+title style={font=\bfseries},
+title={MCOK Relative Achievable Data Rate},
+legend style={legend cell align=left,align=left,draw=white!15!black}
+]
+\addplot [color=mycolor1,only marks,mark=x,mark options={solid}]
+  table[row sep=crcr]{%
+20	0.226466666666667\\
+24.390243902439	0.185702666666667\\
+};
+\addlegendentry{measurements};
+
+\end{axis}
+\end{tikzpicture}%

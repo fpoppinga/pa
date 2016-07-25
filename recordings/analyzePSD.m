@@ -4,7 +4,8 @@ function [ snr ] = analyzePSD( filename )
 
     [y, Fs] = audioread(filename);
     l = y(:, 1);
-    psd = abs(fft(l).*fliplr(fft(l)));
-    plot(psd)
+%     psd = abs(fft(l).*fliplr(fft(l)));
+    [pyy,w] = periodogram(l);
+    plot(w,10*log10(pyy))
 end
 

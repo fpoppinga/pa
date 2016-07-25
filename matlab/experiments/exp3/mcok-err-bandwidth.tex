@@ -1,0 +1,38 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=\figurewidth,
+height=0.267\figureheight,
+at={(0\figurewidth,0\figureheight)},
+scale only axis,
+xmin=2000,
+xmax=8000,
+xlabel={B [Hz]},
+xmajorgrids,
+ymin=-0.1,
+ymax=1.1,
+ylabel={$\text{E}_{\text{Byte}}$},
+ymajorgrids,
+axis background/.style={fill=white},
+title style={font=\bfseries},
+title={MCOK Byte Error Rate over Total Bandwidth},
+axis x line*=bottom,
+axis y line*=left
+]
+\addplot [color=mycolor1,only marks,mark=x,mark options={solid},forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+2500	1	0	0\\
+5000	0.0227710826911515	-0.0672289173088484	0.0227710826911515\\
+7000	0.100675342600808	-0.0768608892832495	0.0547569752538697\\
+};
+\end{axis}
+\end{tikzpicture}%

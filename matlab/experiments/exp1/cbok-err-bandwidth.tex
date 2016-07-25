@@ -1,0 +1,39 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=\figurewidth,
+height=0.267\figureheight,
+at={(0\figurewidth,0\figureheight)},
+scale only axis,
+xmin=0,
+xmax=8000,
+xlabel={B [Hz]},
+xmajorgrids,
+ymin=-0.1,
+ymax=1.1,
+ylabel={$\text{E}_{\text{Byte}}$},
+ymajorgrids,
+axis background/.style={fill=white},
+title style={font=\bfseries},
+title={CBOK Byte Error Rate over Bandwidth},
+axis x line*=bottom,
+axis y line*=left
+]
+\addplot [color=mycolor1,only marks,mark=x,mark options={solid},forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+500	0.820341573631047	-0.136895268474216	0.195341573631047\\
+2500	0.0285683104231491	-0.227841945987107	0.0285683104231491\\
+5000	0.0111111111111111	-0.0722222222222222	0.0111111111111111\\
+7000	0.0104166666666667	-0.0208333333333333	0.0104166666666667\\
+};
+\end{axis}
+\end{tikzpicture}%

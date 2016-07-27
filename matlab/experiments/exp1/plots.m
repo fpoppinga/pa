@@ -55,7 +55,7 @@ title('CBOK Byte Error over Average Frequency');
 xlabel('f_{12} [Hz]'), ylabel('E_{Byte}');
 hold all;
 errorbar(u, emean, emean-emin, emean-emax, 'x');
-axis([0 8000 -0.1 1.1]);
+axis([0 8000 -0.02 0.2]);
 pbaspect([5 1 1]);
 grid on;
 hold off;

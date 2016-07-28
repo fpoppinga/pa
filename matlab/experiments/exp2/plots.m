@@ -20,8 +20,8 @@ grid on;
 hold off;
 
 legend('measurements', 'fitted curve');
-title('CBOK Relative Achievable Data Rate');
-xlabel('T_{packet}^{-1} [Hz]'), ylabel('R_{CBOK} / R_{max}');
+title('CBOK Relative Data Rate');
+xlabel('T_{packet}^{-1} [Hz]'), ylabel('R_{relative, CBOK}');
 
 cleanfigure;
 matlab2tikz('cbok-rate-maxachievable.tex', 'height', '\figureheight', 'width', '\figurewidth');
@@ -30,7 +30,9 @@ errorfit = fit(Tpacket', mean(1-E, 2), 'smoothingspline');
 
 ts = min(Tpacket):0.001:max(Tpacket);
 figure();
-plot(Tpacket, 1-E, 'xb', ts, errorfit(ts), '-r')
+plot(Tpacket, 1-E, 'xb');
+hold on;
+plot(ts, errorfit(ts), '-r');
 pbaspect([2.5 1 1]);
 
 grid on;
